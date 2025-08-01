@@ -1,0 +1,41 @@
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+stages:
+  - build
+  - test
+  - sonar
+  - docker
+
+cache:
+  paths:
+    - .m2/repository
+
+before_script:
+  - echo "Start pipeline"
+
+build:
+  stage: build
+  script:
+    - ./mvnw clean compile
+
+test:
+  stage: test
+  script:
+    - ./mvnw test
+
+sonar:
+  stage: sonar
+  script:
+    - ./mvnw verify sonar:sonar -Dsonar.projectKey=hrms -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN
+  only:
+    - main
+
+docker:
+  stage: docker
+  script:
+    - docker build -t hrms-backend .
+  only:
+    - main
