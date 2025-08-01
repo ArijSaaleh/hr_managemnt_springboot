@@ -3,6 +3,7 @@ package com.arij.hrms.controllers;
 
 import com.arij.hrms.entities.Departement;
 import com.arij.hrms.services.DepartementService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class DepartementController {
     }
 
     @PostMapping
-    public Departement createDepartement(@RequestBody  Departement dept) {
+    public Departement createDepartement(@Valid @RequestBody  Departement dept) {
         return departementService.createDepartement(dept);
     }
 

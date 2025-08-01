@@ -25,4 +25,14 @@ public class EmployeeController {
     public Employee create(@Valid @RequestBody EmployeeDTO DTO){
         return employeeService.create(DTO);
     }
+    @PutMapping("/{id}")
+    public Employee update(@PathVariable Long id, @Valid @RequestBody EmployeeDTO dto){
+        return employeeService.update(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        employeeService.delete(id);
+    }
+
 }

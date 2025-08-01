@@ -31,4 +31,21 @@ public class EmployeeService {
         return employeeRepository.save(emp);
 
     }
+    public Employee update(Long id, EmployeeDTO dto) {
+        Employee emp = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+        Departement dept = departementRepository.findById(dto.getDepartmentId())
+                .orElseThrow(() -> new RuntimeException("Departement not found"));
+
+        emp.setFirstName(dto.getFirstName());
+        emp.setLastName(dto.getLastName());
+        emp.setEmail(dto.getEmail());
+        emp.setDepartement(dept);
+
+        return employeeRepository.save(emp);
+    }
+
+    public void delete(Long id){
+        employeeRepository.deleteById(id);
+    }
+
 }
