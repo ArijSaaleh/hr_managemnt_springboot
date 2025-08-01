@@ -6,6 +6,7 @@ import com.arij.hrms.entities.Departement;
 import com.arij.hrms.services.DepartementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class DepartementController {
     public Departement getById(@PathVariable Long id) {
         return departementService.findById(id);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Departement create(@Valid @RequestBody DepartementDTO dto) {
         return departementService.createDepartement(dto);
