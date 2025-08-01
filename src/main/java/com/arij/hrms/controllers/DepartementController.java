@@ -1,6 +1,7 @@
 package com.arij.hrms.controllers;
 
 
+import com.arij.hrms.dto.DepartementDTO;
 import com.arij.hrms.entities.Departement;
 import com.arij.hrms.services.DepartementService;
 import jakarta.validation.Valid;
@@ -21,9 +22,21 @@ public class DepartementController {
         return departementService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Departement getById(@PathVariable Long id) {
+        return departementService.findById(id);
+    }
     @PostMapping
-    public Departement createDepartement(@Valid @RequestBody  Departement dept) {
-        return departementService.createDepartement(dept);
+    public Departement create(@Valid @RequestBody DepartementDTO dto) {
+        return departementService.createDepartement(dto);
+    }
+    @PutMapping("/{id}")
+    public Departement update(@PathVariable Long id, @Valid @RequestBody DepartementDTO dto) {
+        return departementService.updateDepartement(id, dto);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        departementService.deleteDepartement(id);
+    }
 }

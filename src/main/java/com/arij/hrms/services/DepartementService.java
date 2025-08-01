@@ -1,5 +1,6 @@
 package com.arij.hrms.services;
 
+import com.arij.hrms.dto.DepartementDTO;
 import com.arij.hrms.entities.Departement;
 import com.arij.hrms.repositories.DepartementRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,24 @@ public class DepartementService {
     public List<Departement> findAll() {
         return departementRepository.findAll();
     }
-
-    public Departement createDepartement(Departement dept) {
-        return departementRepository.save(dept);
+    public Departement findById(Long id) {
+        return departementRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Departement not found"));
     }
+
+    public Departement createDepartement(DepartementDTO dto) {
+        Departement d = new Departement();
+        d.setName(dto.getName());
+        return departementRepository.save(d);
+    }
+    public Departement updateDepartement(Long id, DepartementDTO dto) {
+        Departement d = findById(id);
+        d.setName(dto.getName());
+        return departementRepository.save(d);
+    }
+    public void deleteDepartement(Long id) {
+        Departement d = findById(id);
+        departementRepository.delete(d);
+    }
+
 }
