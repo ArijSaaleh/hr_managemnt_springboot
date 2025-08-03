@@ -23,6 +23,10 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        if (appUserRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email is already in use");
+        }
         AppUser user = AppUser.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

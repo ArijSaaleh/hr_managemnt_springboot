@@ -1,17 +1,15 @@
 # Use the official OpenJDK 24 image as base
-FROM openjdk:24-jdk-slim
+FROM eclipse-temurin:24-jdk-alpine
 
-# Set environment variables
-ENV JAVA_OPTS=""
-
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Copy the jar file (replace with your actual JAR name if needed)
+# Copy the JAR file
 COPY target/*.jar app.jar
 
-# Expose port 8080
+
+# Expose the app port
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+# Run the app
+ENTRYPOINT ["java", "-jar", "app.jar"]
